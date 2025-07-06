@@ -1,45 +1,33 @@
 schema: '2.0'
 stages:
   get_data:
-    cmd: python scripts/00_get_data.py
+    cmd: python src/data/make_dataset.py
     deps:
-    - path: scripts/00_get_data.py
+    - path: src/data/make_dataset.py
       hash: md5
-      md5: 20136e8d1edb6bea7ca3fa238278ae59
-      size: 632
-    params:
-      params.yaml:
-        data.raw_path: data/01_raw
+      md5: b23cfd02bcd68ddc6b4a9ed310e10421
+      size: 401
     outs:
-    - path: data/01_raw/iris.csv
+    - path: data/raw/iris.csv
       hash: md5
       md5: 21d441a28bce4417276097df955afc50
       size: 2928
   process_data:
-    cmd: python scripts/01_process_data.py
+    cmd: python src/data/process_data.py
     deps:
-    - path: data/01_raw/iris.csv
+    - path: data/raw/iris.csv
       hash: md5
       md5: 21d441a28bce4417276097df955afc50
       size: 2928
-    - path: scripts/01_process_data.py
+    - path: src/data/process_data.py
       hash: md5
-      md5: b7f75238e6282621d2e144674047402e
-      size: 1183
-    params:
-      params.yaml:
-        base.seed: 42
-        data.processed_path: data/02_processed
-        process.test_split: 0.2
+      md5: 165ff3aacf4ec992d3332e953f481711
+      size: 495
     outs:
-    - path: data/02_processed/test.csv
+    - path: data/processed/processed_iris.csv
       hash: md5
-      md5: 95f857168039f9cbb331b8d3be660f38
-      size: 648
-    - path: data/02_processed/train.csv
-      hash: md5
-      md5: 91dd257ee69a81c95eab961cce93b5ba
-      size: 2358
+      md5: 10f5f61b137fa708403ea5c480386bfe
+      size: 2908
   train_model:
     cmd: python scripts/02_train_model.py
     deps:
@@ -86,3 +74,23 @@ stages:
       hash: md5
       md5: 91338818af8a5ec63951804a6c54b7b1
       size: 56
+  train:
+    cmd: python src/models/train_model.py
+    deps:
+    - path: data/processed/processed_iris.csv
+      hash: md5
+      md5: 10f5f61b137fa708403ea5c480386bfe
+      size: 2908
+    - path: params.yaml
+      hash: md5
+      md5: 2ccdb7b283b4b29d11880c1383fb489b
+      size: 54
+    - path: src/models/train_model.py
+      hash: md5
+      md5: 637fb317ea4bd9dc092194d97da920ec
+      size: 1463
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 2cb1480d6e3e85cf76a6237435f558e9
+      size: 1295
