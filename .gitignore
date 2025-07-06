@@ -14,5 +14,4 @@ data/raw/*
 data/processed/*
 models/*
 mlruns/
-dvc.lock
 poetry.lock
