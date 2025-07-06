@@ -10,6 +10,8 @@ from sklearn.metrics import accuracy_score
 import joblib
 import mlflow
 import mlflow.sklearn
+from mlflow.models.signature import ModelSignature
+from mlflow.types.schema import Schema, ColSpec
 
 
 def train_model():
@@ -44,8 +46,24 @@ def train_model():
         joblib.dump(model, model_path)
         print(f"Model saved to {model_path}")
 
-        mlflow.sklearn.log_model(model, "model")
-        print("Model logged to MLflow")
+        input_schema = Schema(
+            [
+                ColSpec("float", "sepal_length"),
+                ColSpec("float", "sepal_width"),
+                ColSpec("float", "petal_length"),
+                ColSpec("float", "petal_width"),
+            ]
+        )
+        output_schema = Schema([ColSpec("integer", "target")])
+
+        signature = ModelSignature(inputs=input_schema, outputs=output_schema)
+
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path="model",
+            signature=signature,  # Use the manually defined signature
+        )
+        print("Model logged to MLflow with a manually defined, robust signature.")
 
 
 if __name__ == "__main__":

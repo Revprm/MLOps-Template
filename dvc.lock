@@ -87,8 +87,8 @@ stages:
       size: 54
     - path: src/models/train_model.py
       hash: md5
-      md5: 637fb317ea4bd9dc092194d97da920ec
-      size: 1463
+      md5: 190499639f8682d19281a4abfeefc303
+      size: 2163
     outs:
     - path: models/model.joblib
       hash: md5
