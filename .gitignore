@@ -14,6 +14,8 @@ pip-selfcheck.json
 .dvc/cache
 .dvc/tmp
 .dvc/lock
+.dvc/config
+dvc.lock
 
 # Data and Models (tracked by DVC, not Git)
 # Add specific .dvc files to git, but not the data itself.
