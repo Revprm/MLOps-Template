@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python scripts/00_get_data.py
+    deps:
+    - path: scripts/00_get_data.py
+      hash: md5
+      md5: 20136e8d1edb6bea7ca3fa238278ae59
+      size: 632
+    params:
+      params.yaml:
+        data.raw_path: data/01_raw
+    outs:
+    - path: data/01_raw/iris.csv
+      hash: md5
+      md5: 21d441a28bce4417276097df955afc50
+      size: 2928
+  process_data:
+    cmd: python scripts/01_process_data.py
+    deps:
+    - path: data/01_raw/iris.csv
+      hash: md5
+      md5: 21d441a28bce4417276097df955afc50
+      size: 2928
+    - path: scripts/01_process_data.py
+      hash: md5
+      md5: b7f75238e6282621d2e144674047402e
+      size: 1183
+    params:
+      params.yaml:
+        base.seed: 42
+        data.processed_path: data/02_processed
+        process.test_split: 0.2
+    outs:
+    - path: data/02_processed/test.csv
+      hash: md5
+      md5: 95f857168039f9cbb331b8d3be660f38
+      size: 648
+    - path: data/02_processed/train.csv
+      hash: md5
+      md5: 91dd257ee69a81c95eab961cce93b5ba
+      size: 2358
+  train_model:
+    cmd: python scripts/02_train_model.py
+    deps:
+    - path: data/02_processed/train.csv
+      hash: md5
+      md5: 91dd257ee69a81c95eab961cce93b5ba
+      size: 2358
+    - path: scripts/02_train_model.py
+      hash: md5
+      md5: 426498506e4446cb2ad14acec0ebf9a6
+      size: 1170
+    params:
+      params.yaml:
+        base.seed: 42
+        model.dir: models
+        model.target_col: target
+        train.C: 1.0
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 9f8bad9e3f76e9735a6d21a145161552
+      size: 1327
+  evaluate_model:
+    cmd: python scripts/03_evaluate_model.py
+    deps:
+    - path: data/02_processed/test.csv
+      hash: md5
+      md5: 95f857168039f9cbb331b8d3be660f38
+      size: 648
+    - path: models/model.joblib
+      hash: md5
+      md5: 9f8bad9e3f76e9735a6d21a145161552
+      size: 1327
+    - path: scripts/03_evaluate_model.py
+      hash: md5
+      md5: bf1a840ce0b02121d446b0ddfaeae52b
+      size: 1477
+    params:
+      params.yaml:
+        evaluate.metrics_file: reports/metrics.json
+        model.target_col: target
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: 91338818af8a5ec63951804a6c54b7b1
+      size: 56
