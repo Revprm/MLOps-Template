@@ -10,8 +10,6 @@ __pycache__/
 venv/
 
 # Data & Models (tracked by DVC, not Git)
-data/raw/*
-data/processed/*
 models/*
 mlruns/
 poetry.lock
