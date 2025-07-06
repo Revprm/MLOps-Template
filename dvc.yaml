@@ -1,48 +1,24 @@
 stages:
-  get_data:
-    cmd: python scripts/00_get_data.py
+  get_data: 
+    cmd: python src/data/make_dataset.py
     deps:
-    - scripts/00_get_data.py
-    params:
-    - data.raw_path
+      - src/data/make_dataset.py
     outs:
-    - data/01_raw/iris.csv
+      - data/raw/iris.csv
 
-  process_data:
-    cmd: python scripts/01_process_data.py
+  process_data: 
+    cmd: python src/data/process_data.py
     deps:
-    - data/01_raw/iris.csv
-    - scripts/01_process_data.py
-    params:
-    - base.seed
-    - data.processed_path
-    - process.test_split
+      - src/data/process_data.py
+      - data/raw/iris.csv 
     outs:
-    - data/02_processed/train.csv
-    - data/02_processed/test.csv
+      - data/processed/processed_iris.csv 
 
-  train_model:
-    cmd: python scripts/02_train_model.py
+  train:
+    cmd: python src/models/train_model.py
     deps:
-    - data/02_processed/train.csv
-    - scripts/02_train_model.py
-    params:
-    - base.seed
-    - model.dir
-    - model.target_col
-    - train.C
+      - src/models/train_model.py
+      - data/processed/processed_iris.csv
+      - params.yaml
     outs:
-    - models/model.joblib
-
-  evaluate_model:
-    cmd: python scripts/03_evaluate_model.py
-    deps:
-    - data/02_processed/test.csv
-    - models/model.joblib
-    - scripts/03_evaluate_model.py
-    params:
-    - evaluate.metrics_file
-    - model.target_col
-    metrics:
-    - reports/metrics.json:
-        cache: false
+      - models/model.joblib

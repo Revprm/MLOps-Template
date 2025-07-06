@@ -1,38 +1,43 @@
-name: Continuous Integration
+name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  test-and-lint:
+  ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.12"]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
 
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip3 install -r requirements.txt
-        pip3 install flake8 pytest
+      - name: Install Poetry
+        run: |
+          pip install poetry
 
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Install Dependencies
+        run: |
+          poetry install
 
-    - name: Test with pytest
-      run: |
-        pytest
+      - name: Check Code Formatting with Black
+        run: |
+          poetry run black . --check
+
+      - name: Reproduce DVC Pipeline
+        run: |
+          poetry run dvc repro
+
+      - name: Run Tests
+        run: |
+          poetry run pytest

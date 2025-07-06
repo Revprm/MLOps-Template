@@ -1,8 +1,0 @@
-pandas
-scikit-learn
-numpy
-pyyaml
-dvc
-joblib
-pytest
-flake8
