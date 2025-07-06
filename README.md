@@ -29,15 +29,23 @@ The repository is organized to separate concerns, making it scalable and easy to
 
 ```
 .
-├── .github/workflows/      # CI/CD pipelines
+├── .dvc/                   # DVC internal files (cache, configs)
+├── .github/                # GitHub-specific files
+│   └── workflows/          # CI/CD pipelines
 ├── data/                   # Data files (tracked by DVC)
 ├── models/                 # Trained models (tracked by DVC)
-├── reports/                # Evaluation reports (e.g., metrics.json)
-├── scripts/                # Python scripts for pipeline stages
+├── notebooks/              # Jupyter notebooks for exploration
+├── reports/                # Evaluation reports (metrics, plots)
+├── scripts/                # Standalone Python scripts for pipeline stages
+├── src/                    # Source code for the project
 ├── tests/                  # Automated tests
-├── .gitignore              # Files ignored by Git
+├── .dvcignore              # Files and directories ignored by DVC
+├── .gitignore              # Files and directories ignored by Git
+├── dvc.lock                # DVC lock file for pipeline integrity
 ├── dvc.yaml                # DVC pipeline definition
+├── LICENSE                 # Project license file
 ├── params.yaml             # Configuration and hyperparameters
+├── README.md               # This documentation file
 └── requirements.txt        # Project dependencies
 ```
 
