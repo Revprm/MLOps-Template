@@ -1,19 +1,4 @@
-base:
-  seed: 42
-
-data:
-  raw_path: data/01_raw
-  processed_path: data/02_processed
-
-process:
-  test_split: 0.2
-
-model:
-  dir: models
-  target_col: target
-
 train:
-  C: 1.0 # Inverse of regularization strength for Logistic Regression
-
-evaluate:
-  metrics_file: reports/metrics.json
+  test_size: 0.2
+  random_state: 42
+  C: 1.0
