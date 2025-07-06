@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-selfcheck.json
+*.egg-info/
+.pytest_cache/
+
+# DVC - local cache and temporary files
+.dvc/cache
+.dvc/tmp
+.dvc/lock
+
+# Data and Models (tracked by DVC, not Git)
+# Add specific .dvc files to git, but not the data itself.
+data/
+models/
+reports/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific
+.DS_Store
+Thumbs.db
