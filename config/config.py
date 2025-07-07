@@ -7,6 +7,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 def load_config():
     """Loads the configuration from params.yaml and validates it."""
     config_path = PROJECT_ROOT / "params.yaml"
+    print(config_path)
 
     if not config_path.exists():
         raise FileNotFoundError(f"Configuration file not found at: {config_path}")

@@ -1,4 +1,6 @@
 import sys
+import json
+from pathlib import Path
 
 sys.path.append("src")
 
@@ -14,6 +16,7 @@ from mlflow.models.signature import ModelSignature
 from mlflow.types.schema import Schema, ColSpec
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 from config.config import config
 
 
@@ -40,6 +43,13 @@ def train_model():
         accuracy = accuracy_score(y_test, y_pred)
         mlflow.log_metric("accuracy", accuracy)
         print(f"Accuracy: {accuracy}")
+
+        reports_dir = Path("reports")
+        reports_dir.mkdir(exist_ok=True)
+        metrics = {"accuracy": accuracy}
+        with open(reports_dir / "metrics.json", "w") as f:
+            json.dump(metrics, f, indent=4)
+        print(f"Metrics saved to {reports_dir / 'metrics.json'}")
 
         # Log confusion matrix
         cm = confusion_matrix(y_test, y_pred)

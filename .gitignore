@@ -8,6 +8,7 @@ __pycache__/
 *.pyc
 .env
 venv/
+.pytest_cache/
 
 # Data & Models (tracked by DVC, not Git)
 mlruns/
