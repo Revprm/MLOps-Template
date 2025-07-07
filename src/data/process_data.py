@@ -13,4 +13,3 @@ def process_data() -> NoReturn:
 
 if __name__ == "__main__":
     process_data()
-    
