@@ -1,46 +1,54 @@
 # MLOps Infrastructure Template
 
-This repository provides a template for building scalable and reproducible machine learning pipelines using modern MLOps tools. It demonstrates a complete workflow from data processing and model training to experiment tracking and CI/CD.
+This repository provides a template for building scalable and reproducible machine learning pipelines using modern MLOps tools. It demonstrates a complete workflow from data processing and model training to experiment tracking, deployment, and CI/CD.
 
 ## Features
 
-  - **DVC**: For data and model versioning.
-  - **Poetry**: For dependency management.
-  - **MLflow**: For experiment tracking.
-  - **GitHub Actions**: For CI/CD automation.
-  - **Modular Structure**: A `src` layout for cleaner, more maintainable code.
+  - **DVC**: For data and model versioning. 📦
+  - **Poetry**: For dependency management.  Abhängigkeiten
+  - **MLflow**: For experiment tracking. 🧪
+  - **FastAPI**: For serving the model as a REST API. 🚀
+  - **GitHub Actions**: For CI/CD automation. 🤖
+  - **Modular Structure**: A `src` layout for cleaner, more maintainable code. 📂
+
 
 ## Project Structure
 
 ```
-├── data
-│   ├── processed
-│   └── raw
-├── models
-├── notebooks
-├── src
+├── .dvc                  # DVC metadata and cache
+├── .github/workflows     # GitHub Actions CI/CD workflows
+│   └── ci.yml
+├── config                # Configuration files
+│   └── config.py
+├── data                  # Data files (tracked by DVC)
+│   ├── processed         # Processed data
+│   └── raw               # Raw data
+├── models                # Trained model artifacts (tracked by DVC)
+├── notebooks             # Jupyter notebooks for exploration
+├── reports               # Generated reports (e.g., model performance)
+├── src                   # Source code for the project
 │   ├── __init__.py
-│   ├── data
+│   ├── app               # FastAPI application
+│   │   └── main.py
+│   ├── data              # Scripts for data handling
 │   │   ├── __init__.py
 │   │   ├── make_dataset.py
 │   │   └── process_data.py
-│   └── models
+│   └── models            # Scripts for training and prediction
 │       ├── __init__.py
 │       ├── predict_model.py
 │       └── train_model.py
-├── tests
-│   └── test_data.py
-├── .dvc
-├── .github
-│   └── workflows
-│       └── ci.yml
-├── .gitignore
-├── dvc.yaml
-├── params.yaml
-├── poetry.lock
-├── pyproject.toml
-└── README.md
+├── tests                 # Test scripts
+│   ├── test_data.py
+│   └── test_pipeline.py
+├── .gitignore            # Files and directories to ignore in Git
+├── dvc.yaml              # DVC pipeline definition
+├── params.yaml           # Parameters for the DVC pipeline
+├── poetry.lock           # Exact versions of dependencies
+├── pyproject.toml        # Project metadata and dependencies for Poetry
+└── README.md             # This file
 ```
+
 
 ## Getting Started
 
@@ -55,29 +63,30 @@ This repository provides a template for building scalable and reproducible machi
 1.  Clone the repository:
     ```bash
     git clone <your-repo-url>
-    cd ml-infra-template
+    cd mlops-infra-template
     ```
 2.  Install dependencies using Poetry:
     ```bash
     poetry install
     ```
+    This command will create a virtual environment and install all the necessary packages.
 
-This command will create a virtual environment and install all the necessary packages listed in `pyproject.toml`.
 
 ## Usage
 
-This project uses DVC to manage the machine learning pipeline. The pipeline consists of three main stages defined in `dvc.yaml`: `get_data`, `process_data`, and `train`.
+This project uses DVC to manage the machine learning pipeline, which consists of three main stages defined in `dvc.yaml`: `get_data`, `process_data`, and `train`.
 
 1.  **Reproduce the full pipeline**:
-    To run the entire pipeline from data downloading to model training, use the following command:
+    To run the entire pipeline from data downloading to model training, use:
     ```bash
     poetry run dvc repro
     ```
 2.  **Running individual scripts**:
     You can also run the Python scripts individually:
-      * To create the dataset: `python src/data/make_dataset.py`
-      * To process the data: `python src/data/process_data.py`
-      * To train the model: `python src/models/train_model.py`
+      - `python -m src.data.make_dataset`
+      - `python -m src.data.process_data`
+      - `python -m src.models.train_model`
+
 
 ## Experiment Tracking with MLflow
 
@@ -89,28 +98,37 @@ To view your experiments, start the MLflow UI:
 mlflow ui
 ```
 
-This will start a local server, typically at http://localhost:5000, where you can view and compare your runs.
+This will start a local server, typically at `http://localhost:5000`.
+
+## Deployment as a REST API
+
+A FastAPI application is included to serve the trained model as a REST API.
+
+To run the API:
+
+```bash
+poetry run uvicorn src.app.main:app --host 0.0.0.0 --port 8080
+```
+
+You can then send POST requests to the `/predict` endpoint. Example using `curl`:
+
+```bash
+curl -X POST "http://127.0.0.1:8080/predict" \
+-H "Content-Type: application/json" \
+-d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
+```
 
 ## Testing
 
-Tests are located in the `tests/` directory and can be run using pytest:
+Tests are in the `tests/` directory and can be run with pytest:
 
 ```bash
 poetry run pytest
 ```
 
-The tests will check the data shape and model accuracy.
-
 ## CI/CD
 
-This repository includes a GitHub Actions workflow for continuous integration. The workflow, defined in `.github/workflows/ci.yml`, is triggered on every push and pull request to the main branch. It performs the following steps:
-
-1.  Checks out the repository
-2.  Sets up Python
-3.  Installs dependencies
-4.  Checks code formatting with Black
-5.  Reproduces the DVC pipeline
-6.  Runs tests with pytest
+The GitHub Actions workflow in `.github/workflows/ci.yml` is triggered on every push and pull request to the main branch. It automates testing, code formatting checks, and Docker image builds.
 
 ## Contributing
 
