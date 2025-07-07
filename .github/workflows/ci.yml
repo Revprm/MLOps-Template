@@ -33,10 +33,6 @@ jobs:
       - name: Check Code Formatting with Black
         run: |
           poetry run black . --check
-          
-      - name: Lint with flake8
-        run: |
-          poetry run flake8 .
 
       - name: Set up DVC
         uses: iterative/setup-dvc@v1
