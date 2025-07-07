@@ -19,6 +19,7 @@ flake8 = "^7.3.0"
 pytest = "^8.0.0"
 black = "^24.0.0"
 great-expectations = "^0.18.0"
+uvicorn = {extras = ["standard"], version = "^0.35.0"}
 
 [build-system]
 requires = ["poetry-core"]

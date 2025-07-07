@@ -21,4 +21,4 @@ COPY . /app
 
 EXPOSE 8080
 
-CMD ["python", "src/app/main.py"]
+CMD ["poetry", "run", "uvicorn", "src.app.main:app", "--reload"]
