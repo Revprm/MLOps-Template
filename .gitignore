@@ -12,4 +12,3 @@ venv/
 
 # Data & Models (tracked by DVC, not Git)
 mlruns/
-poetry.lock
