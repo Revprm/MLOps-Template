@@ -1,6 +1,5 @@
-FROM python:3.11-slim
-
-WORKDIR /app
+# Build stage
+FROM python:3.11-slim as builder
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -10,10 +9,18 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="/root/.local/bin:$PATH"
 
-COPY poetry.lock pyproject.toml /app/
+WORKDIR /app
+COPY poetry.lock pyproject.toml ./
 
-RUN poetry config virtualenvs.create false && \
-    poetry install --only=main --no-interaction --no-ansi
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --only=main
+
+# Runtime stage
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
