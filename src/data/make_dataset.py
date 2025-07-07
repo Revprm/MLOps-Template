@@ -1,5 +1,4 @@
 from typing import NoReturn
-import pandas as pd
 from sklearn.datasets import load_iris
 from config.config import config
 

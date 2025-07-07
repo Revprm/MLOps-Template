@@ -1,21 +1,18 @@
-import sys
+import joblib
 import json
 from pathlib import Path
 
-sys.path.append("src")
-
+import matplotlib.pyplot as plt
+import mlflow
+import mlflow.sklearn
+import seaborn as sns
 import pandas as pd
-import yaml
+
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
-import joblib
-import mlflow
-import mlflow.sklearn
 from mlflow.models.signature import ModelSignature
 from mlflow.types.schema import Schema, ColSpec
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 from config.config import config
 
@@ -44,6 +41,7 @@ def train_model():
         mlflow.log_metric("accuracy", accuracy)
         print(f"Accuracy: {accuracy}")
 
+        # Save metrics for DVC
         reports_dir = Path("reports")
         reports_dir.mkdir(exist_ok=True)
         metrics = {"accuracy": accuracy}
