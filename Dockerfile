@@ -12,7 +12,7 @@ ENV PATH="/root/.local/bin:$PATH"
 WORKDIR /app
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --only=main
+RUN poetry export -f requirements.txt --output requirements.txt
 
 # Runtime stage
 FROM python:3.11-slim
