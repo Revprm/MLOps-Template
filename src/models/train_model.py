@@ -78,7 +78,7 @@ def train_model():
             artifact_path="model",
             signature=signature,
         )
-        print("Model logged to MLflow with a manually defined, robust signature.")
+        print("Model logged to MLflow with a manually defined, " "robust signature.")
 
 
 if __name__ == "__main__":
