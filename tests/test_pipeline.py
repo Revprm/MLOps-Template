@@ -1,6 +1,5 @@
 import os
 from subprocess import run
-import pandas as pd
 from config.config import config
 
 
@@ -15,6 +14,8 @@ def test_pipeline_reproducibility():
 def test_prediction_script():
     """Tests the prediction script."""
     result = run(
-        ["python", "src/models/predict_model.py"], capture_output=True, text=True
+        ["python", "-m", "src.models.predict_model"],
+        capture_output=True,
+        text=True,
     )
     assert "Prediction for sample" in result.stdout

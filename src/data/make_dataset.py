@@ -1,5 +1,4 @@
 from typing import NoReturn
-import pandas as pd
 from sklearn.datasets import load_iris
 from config.config import config
 
@@ -9,7 +8,7 @@ def make_dataset() -> NoReturn:
     iris = load_iris(as_frame=True)
     df = iris.frame
     df.to_csv(config["data"]["raw_data_path"], index=False)
-    print(f"Raw dataset created and saved to {config['data']['raw_data_path']}")
+    print("Raw dataset created and saved to " f"{config['data']['raw_data_path']}")
 
 
 if __name__ == "__main__":
