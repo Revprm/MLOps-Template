@@ -1,24 +1,35 @@
 stages:
-  get_data: 
-    cmd: python src/data/make_dataset.py
+  get_data:
+    cmd: python -m src.data.make_dataset
     deps:
       - src/data/make_dataset.py
+      - config/config.py
+      - params.yaml
     outs:
       - data/raw/iris.csv
 
-  process_data: 
-    cmd: python src/data/process_data.py
+  process_data:
+    cmd: python -m src.data.process_data
     deps:
       - src/data/process_data.py
-      - data/raw/iris.csv 
+      - data/raw/iris.csv
+      - config/config.py
+      - params.yaml
     outs:
-      - data/processed/processed_iris.csv 
+      - data/processed/processed_iris.csv
 
   train:
-    cmd: python src/models/train_model.py
+    cmd: python -m src.models.train_model
     deps:
       - src/models/train_model.py
       - data/processed/processed_iris.csv
+      - config/config.py
       - params.yaml
     outs:
       - models/model.joblib
+    metrics:
+      - reports/metrics.json:
+          cache: false 
+    plots:
+      - confusion_matrix.png:
+          cache: false

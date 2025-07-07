@@ -1,4 +1,17 @@
-train:
-  test_size: 0.2
+base:
+  project_name: "mlops-infra-template"
   random_state: 42
+  log_level: "INFO"
+
+data:
+  raw_data_path: "data/raw/iris.csv"
+  processed_data_path: "data/processed/processed_iris.csv"
+  test_size: 0.2
+
+train:
+  model_path: "models/model.joblib"
   C: 1.0
+
+deployment:
+  app_host: "0.0.0.0"
+  app_port: 8080

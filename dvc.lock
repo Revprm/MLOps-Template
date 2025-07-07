@@ -1,28 +1,44 @@
 schema: '2.0'
 stages:
   get_data:
-    cmd: python src/data/make_dataset.py
+    cmd: python -m src.data.make_dataset
     deps:
+    - path: config/config.py
+      hash: md5
+      md5: c27607adea227357f33b15a05a1d1528
+      size: 846
+    - path: params.yaml
+      hash: md5
+      md5: d87edccf95eca9fcdf55412310f56482
+      size: 324
     - path: src/data/make_dataset.py
       hash: md5
-      md5: b23cfd02bcd68ddc6b4a9ed310e10421
-      size: 401
+      md5: 5fc8a14cfb560c06ffb0c3dae50b695e
+      size: 466
     outs:
     - path: data/raw/iris.csv
       hash: md5
       md5: 21d441a28bce4417276097df955afc50
       size: 2928
   process_data:
-    cmd: python src/data/process_data.py
+    cmd: python -m src.data.process_data
     deps:
+    - path: config/config.py
+      hash: md5
+      md5: c27607adea227357f33b15a05a1d1528
+      size: 846
     - path: data/raw/iris.csv
       hash: md5
       md5: 21d441a28bce4417276097df955afc50
       size: 2928
+    - path: params.yaml
+      hash: md5
+      md5: d87edccf95eca9fcdf55412310f56482
+      size: 324
     - path: src/data/process_data.py
       hash: md5
-      md5: 165ff3aacf4ec992d3332e953f481711
-      size: 495
+      md5: 58dbdee0e50de41f5f48294430b5f784
+      size: 522
     outs:
     - path: data/processed/processed_iris.csv
       hash: md5
@@ -75,22 +91,34 @@ stages:
       md5: 91338818af8a5ec63951804a6c54b7b1
       size: 56
   train:
-    cmd: python src/models/train_model.py
+    cmd: python -m src.models.train_model
     deps:
+    - path: config/config.py
+      hash: md5
+      md5: c27607adea227357f33b15a05a1d1528
+      size: 846
     - path: data/processed/processed_iris.csv
       hash: md5
       md5: 10f5f61b137fa708403ea5c480386bfe
       size: 2908
     - path: params.yaml
       hash: md5
-      md5: 2ccdb7b283b4b29d11880c1383fb489b
-      size: 54
+      md5: d87edccf95eca9fcdf55412310f56482
+      size: 324
     - path: src/models/train_model.py
       hash: md5
-      md5: 190499639f8682d19281a4abfeefc303
-      size: 2163
+      md5: f3aad9a82da70037efbd4625cf407a31
+      size: 2825
     outs:
+    - path: confusion_matrix.png
+      hash: md5
+      md5: ced7d1e17ec03e230d953402ef2b5c79
+      size: 15415
     - path: models/model.joblib
       hash: md5
       md5: 2cb1480d6e3e85cf76a6237435f558e9
       size: 1295
+    - path: reports/metrics.json
+      hash: md5
+      md5: 354bf16174ce36ae898245642a458c0d
+      size: 25
