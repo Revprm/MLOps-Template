@@ -1,16 +1,14 @@
+from typing import NoReturn
 import pandas as pd
+from config.config import config
 
 
-def process_data():
+def process_data() -> NoReturn:
     """Reads raw data, processes it, and saves the result."""
-    df = pd.read_csv("data/raw/iris.csv")
-
-    # Process: clean up column names
+    df = pd.read_csv(config["data"]["raw_data_path"])
     df.columns = [col.replace(" (cm)", "").replace(" ", "_") for col in df.columns]
-
-    # Save processed data
-    df.to_csv("data/processed/processed_iris.csv", index=False)
-    print("Processed data saved to data/processed/processed_iris.csv")
+    df.to_csv(config["data"]["processed_data_path"], index=False)
+    print(f"Processed data saved to {config['data']['processed_data_path']}")
 
 
 if __name__ == "__main__":
