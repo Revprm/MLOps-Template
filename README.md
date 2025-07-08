@@ -5,12 +5,11 @@ This repository provides a template for building scalable and reproducible machi
 ## Features
 
   - **DVC**: For data and model versioning. 📦
-  - **Poetry**: For dependency management.  Abhängigkeiten
+  - **Poetry**: For dependency management.
   - **MLflow**: For experiment tracking. 🧪
   - **FastAPI**: For serving the model as a REST API. 🚀
   - **GitHub Actions**: For CI/CD automation. 🤖
   - **Modular Structure**: A `src` layout for cleaner, more maintainable code. 📂
-
 
 ## Project Structure
 
@@ -49,7 +48,6 @@ This repository provides a template for building scalable and reproducible machi
 └── README.md             # This file
 ```
 
-
 ## Getting Started
 
 ### Prerequisites
@@ -60,17 +58,16 @@ This repository provides a template for building scalable and reproducible machi
 
 ### Installation
 
-1.  Clone the repository:
+1.  **Clone the repository:**
     ```bash
     git clone <your-repo-url>
     cd mlops-infra-template
     ```
-2.  Install dependencies using Poetry:
+2.  **Install dependencies using Poetry:**
     ```bash
     poetry install
     ```
     This command will create a virtual environment and install all the necessary packages.
-
 
 ## Usage
 
@@ -86,7 +83,6 @@ This project uses DVC to manage the machine learning pipeline, which consists of
       - `python -m src.data.make_dataset`
       - `python -m src.data.process_data`
       - `python -m src.models.train_model`
-
 
 ## Experiment Tracking with MLflow
 
