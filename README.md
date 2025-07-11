@@ -1,4 +1,4 @@
-# MLOps Infrastructure Template
+# MLOps Template
 
 This repository provides a template for building scalable and reproducible machine learning pipelines using modern MLOps tools. It demonstrates a complete workflow from data processing and model training to experiment tracking, deployment, and CI/CD.
 
@@ -61,7 +61,7 @@ This repository provides a template for building scalable and reproducible machi
 1.  **Clone the repository:**
     ```bash
     git clone <your-repo-url>
-    cd mlops-infra-template
+    cd mlops-template
     ```
 2.  **Install dependencies using Poetry:**
     ```bash
