@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ml-infra-template"
+name = "mlops-template"
 packages = [{include = "src"}]
 version = "0.1.0"
 description = "A template for MLOps projects."

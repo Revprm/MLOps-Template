@@ -68,4 +68,4 @@ jobs:
   #       with:
   #         context: .
   #         push: true
-  #         tags: ${{ secrets.DOCKER_USERNAME }}/mlops-infra-template:latest
+  #         tags: ${{ secrets.DOCKER_USERNAME }}/mlops-template:latest
