@@ -35,7 +35,7 @@ jobs:
           poetry run black . --check
 
       - name: Set up DVC
-        uses: iterative/setup-dvc@v1
+        uses: iterative/setup-dvc@v2
 
       - name: Reproduce DVC Pipeline
         run: |
